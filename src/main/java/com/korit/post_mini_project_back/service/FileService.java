@@ -40,7 +40,10 @@ public class FileService {
             imageFiles.add(ImageFile.builder()
                             .category(category)
                             .originalFilename(originalFilename)
-                            .filePath(filePath.toString())
+                            // C:\gov\ ... \ upload ( \ post \ ... jpg ) < 괄호부분을 가지고 오고 싶음
+                            // upload라는 문자열의 위치를 찾고 문자열 길이만큼 더한다.
+                            // 그런데 프론트엔드에서 \가 있으면 /랑 구분을 못할 수 있음 => 그래서 \를 /로 대체함
+                            .filePath(filePath.toString().substring(filePath.toString().indexOf("upload")+"upload".length()).replaceAll("\\\\","/"))
                             .extension(extension)
                             .size(file.getSize())
                     .build());
